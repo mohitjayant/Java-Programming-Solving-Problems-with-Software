@@ -58,7 +58,7 @@ public class findGeneSample {
     }
 
     public void testfindGene() {
-        String dna="ATGATCTAATTTATGCTGCAACGGTGAAGA";
+        String dna="AATGCTAACTAGCTGACTAAT";
         System.out.println("DNA strand is " + dna);
         System.out.println("Gene is ");
         int startIndex=0;
