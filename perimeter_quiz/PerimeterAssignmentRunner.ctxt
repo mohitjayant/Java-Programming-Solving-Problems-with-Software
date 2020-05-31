@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=PerimeterAssignmentRunner
+comment1.params=s
+comment1.target=double\ getPerimeter(edu.duke.Shape)
+comment2.params=s
+comment2.target=double\ largestLength(edu.duke.Shape)
+comment3.params=
+comment3.target=void\ testPerimeter()
+comment4.params=
+comment4.target=void\ triangle()
+comment5.params=args
+comment5.target=void\ main(java.lang.String[])
+numComments=6
