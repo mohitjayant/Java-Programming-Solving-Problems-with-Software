@@ -22,7 +22,7 @@ public class countryExport {
         FileResource fr=new FileResource();
         CSVParser parser=fr.getCSVParser();
 
-        listExport(parser,"coffee");
+        listExport(parser,"sugar");
     }
 
     public static void main(String[] args) {
