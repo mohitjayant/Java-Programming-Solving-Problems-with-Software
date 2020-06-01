@@ -1,22 +1,31 @@
 import edu.duke.*;
 public class urlLink {
-public void urlFind() {
-    URLResource file=new URLResource("http://www.dukelearntoprogram.com/course2/data/manylinks.html ");
-    for(String item:file.words())
-    {
-        String itemLower=item.toLowerCase();
-        int pos=itemLower.indexOf("youtube.com");
-        if(pos!=-1)
-        {
-            int beg=item.lastIndexOf("\"",pos);
-            int last=item.indexOf("\"",pos+1);
-            System.out.println(item.substring(beg,last));
+
+    public String mystery(String dna) {
+        int pos = dna.indexOf("T");
+        int count = 0;
+        int startPos = 0;
+        String newDna = "";
+        if (pos == -1) {
+          return dna;
         }
-    }
-}
+        while (count < 3) {
+          count += 1;
+          newDna = newDna + dna.substring(startPos,pos);
+          startPos = pos+1;
+          pos = dna.indexOf("T", startPos);
+          if (pos == -1) {
+            break;
+          }
+        }
+        newDna = newDna + dna.substring(startPos);
+        return newDna;
+      }
+    
+
 
     public static void main(String[] args) {
         urlLink url=new urlLink();
-        url.urlFind();
+        System.out.println(url.mystery("ACTGHTVGHYTMNKT"));
     }
 }

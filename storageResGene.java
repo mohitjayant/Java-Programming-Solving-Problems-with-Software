@@ -18,7 +18,7 @@ public class storageResGene {
             }
         }
 
-        return dnaStr.length();
+        return currIndex;
         
     }
 
@@ -95,30 +95,50 @@ public class storageResGene {
     }
 
     public void testFindGene() {
-        String dna="ATGCTGTAACTG";
-        System.out.println("DNA strand is " + dna);
-        double cg=cgRatio(dna);
-        System.out.println("cg Ratio: "+cg);
+        FileResource fr=new FileResource("test.fa");
+        String dna=fr.asString();
+        dna=dna.toUpperCase();
+        //System.out.println("DNA strand is " + dna);
+        //double cg=cgRatio(dna);
+        //System.out.println("cg Ratio: "+cg);
         System.out.println("No. of CTG is "+countCTG(dna));
         //System.out.println("Gene is ");
         StorageResource sr=new StorageResource();
-
+        int longest=0;
         int startIndex=0;
         while(true)
         {
+            if(startIndex>=dna.length())
+            {
+                break;
+            }
             String gene=geneTest(dna,startIndex);
             if(gene.isEmpty())
             {
                 break;
             }
+            //int longest=0;
+            if(gene.length()>longest)
+            {
+                longest=gene.length();
+            }
             sr.add(gene);
             startIndex=dna.indexOf(gene,startIndex)+gene.length();
         }
-        System.err.println("Gene are: ");
+        System.out.println("Gene are: ");
+        int cgCount=0;
         for(String gene:sr.data())
         {
             System.out.println(gene);
+            double cg=cgRatio(gene);
+            if(cg>0.35)
+            {
+                cgCount++;
+            }
         }
+        System.out.println("Size is "+sr.size());
+        System.out.println("CG count is: "+cgCount);
+        System.out.println("Longest Gene: "+longest);
         
     }
 
