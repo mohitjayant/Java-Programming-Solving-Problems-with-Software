@@ -17,12 +17,33 @@ public class countryExport {
         }
     }
 
+    public void countryInfo(CSVParser parser,String country) {
+        String res="";
+        for(CSVRecord record:parser)
+        {
+            
+            String co=record.get("Country");
+            if(co.contains(country))
+            {
+                res=co+": "+record.get("Exports")+": "+record.get("Value (dollars)");
+                System.out.println(res);
+                break;
+            }
+        }
+
+        if(res=="")
+        {
+            System.out.println("NOT FOUND");
+        }
+    }
+
     public void testListExport()
     {
         FileResource fr=new FileResource();
         CSVParser parser=fr.getCSVParser();
 
-        listExport(parser,"sugar");
+        //listExport(parser,"sugar");
+        countryInfo(parser,"Germany");
     }
 
     public static void main(String[] args) {
