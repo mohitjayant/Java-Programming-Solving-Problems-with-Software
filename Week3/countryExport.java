@@ -93,9 +93,9 @@ public class countryExport {
         parser=fr.getCSVParser();
         countryInfo(parser,"Nauru");
         parser=fr.getCSVParser();
-        listExportersTwoProducts(parser,"gold","diamonds");
+        listExportersTwoProducts(parser,"cotton","flowers");
         parser=fr.getCSVParser();
-        numberOfExporters(parser,"sugar");
+        numberOfExporters(parser,"cocoa");
         parser=fr.getCSVParser();
         bigExporters(parser,"$999,999,999,999");
     }

@@ -13,13 +13,8 @@ public class weatherCondition {
             }
         else
         {
-
-            if(currentRow.get("Humidity").contains("N/A"))
-            {
-                currentRow=minmSoFar;
-            }
-            double current=Double.parseDouble(currentRow.get("Humidity"));
-            double largest=Double.parseDouble(minmSoFar.get("Humidity"));
+            double current=Double.parseDouble(currentRow.get("TemperatureF"));
+            double largest=Double.parseDouble(minmSoFar.get("TemperatureF"));
             if(current==-9999.0)
             {
                 current=largest;
@@ -50,16 +45,10 @@ public class weatherCondition {
         int count=0;
         for(CSVRecord record:parser)
         {
-            if(record.get("Humidity").contains("N/A"))
-            {
-                continue;
-            }
-            if(Double.parseDouble(record.get("Humidity"))>80.0)
-            {
-                double temp=Double.parseDouble(record.get("TemperatureF"));
-                count++;
-                avg+=temp;
-            }
+            
+            double temp=Double.parseDouble(record.get("TemperatureF"));
+            count++;
+            avg+=temp;
         }
         avg=avg/count;
         return avg;
@@ -79,16 +68,16 @@ public class weatherCondition {
 
     public void testManyDaysTemp() 
     {
-         CSVRecord largestSoFar=null;
+         CSVRecord smallSoFar=null;
          DirectoryResource dr=new DirectoryResource();
 
          for(File f:dr.selectedFiles())
          {
              FileResource fr=new FileResource(f);
              CSVRecord currentRow=calMaxTemp(fr.getCSVParser());
-             largestSoFar=minmOfTwo(currentRow, largestSoFar);
+             smallSoFar=minmOfTwo(currentRow, smallSoFar);
          }
-         System.out.println("Maxm. Temperature: "+Double.parseDouble(largestSoFar.get("TemperatureF")) + " at "+largestSoFar.get("DateUTC"));
+         System.out.println("Minm. Temperature: "+smallSoFar.get("TemperatureF") + " at "+smallSoFar.get("DateUTC"));
         
     }
 
@@ -113,25 +102,25 @@ public class weatherCondition {
 
     public void testLowestHumidityInManyFile() 
     {
-         CSVRecord largestSoFar=null;
+         CSVRecord smallSoFar=null;
          DirectoryResource dr=new DirectoryResource();
 
          for(File f:dr.selectedFiles())
          {
              FileResource fr=new FileResource(f);
              CSVRecord currentRow=lowestHumidityInFile(fr.getCSVParser());
-             largestSoFar=minmOfTwo(currentRow, largestSoFar);
+             smallSoFar=minmOfTwo(currentRow, smallSoFar);
          }
-         System.out.println("Maxm. Humidity: "+Double.parseDouble(largestSoFar.get("Humidity")) + " at "+largestSoFar.get("DateUTC"));
+         System.out.println("Minm. Humidity: "+Double.parseDouble(smallSoFar.get("Humidity")) + " at "+smallSoFar.get("DateUTC"));
         
     }
 
     public static void main(String[] args) {
         weatherCondition mt=new weatherCondition();
         //Function for maxm Temperature in a day
-        mt.testSingleTemp();
+        //mt.testSingleTemp();
         //Function for maxm Temperature in many days
-        //mt.testManyDaysTemp();
+        mt.testManyDaysTemp();
         //Test lowest humidity
         //mt.testLowestHumidityInFile();
         //mt.testLowestHumidityInManyFile();
