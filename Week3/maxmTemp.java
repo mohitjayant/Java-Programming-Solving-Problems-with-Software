@@ -5,12 +5,9 @@ import org.apache.commons.csv.*;
 
 public class maxmTemp {
 
-    public CSVRecord calMaxTemp(CSVParser parser)
+    public CSVRecord maxOfTwo(CSVRecord currentRow,CSVRecord largestSoFar) 
     {
-        CSVRecord largestSoFar=null;
-        for(CSVRecord currentRow:parser)
-        {
-            if(largestSoFar==null)
+        if(largestSoFar==null)
             {
                 largestSoFar=currentRow;
             }
@@ -24,6 +21,15 @@ public class maxmTemp {
                     largestSoFar=currentRow;
                 }
             }
+            return largestSoFar;
+    }
+
+    public CSVRecord calMaxTemp(CSVParser parser)
+    {
+        CSVRecord largestSoFar=null;
+        for(CSVRecord currentRow:parser)
+        {
+            largestSoFar=maxOfTwo(currentRow, largestSoFar);
         }
 
         return largestSoFar;
@@ -47,20 +53,7 @@ public class maxmTemp {
          {
              FileResource fr=new FileResource(f);
              CSVRecord currentRow=calMaxTemp(fr.getCSVParser());
-             if(largestSoFar==null)
-             {
-                 largestSoFar=currentRow;
-             }
-             else
-             {
-                double currentTemp=Double.parseDouble(currentRow.get("TemperatureF"));
-                double largesttemp=Double.parseDouble(currentRow.get("TemperatureF"));
-
-                if(currentTemp>largesttemp)
-                {
-                    largestSoFar=currentRow;
-                }
-             }
+             largestSoFar=maxOfTwo(currentRow, largestSoFar);
          }
          System.out.println("Maxm. Temperature: "+Double.parseDouble(largestSoFar.get("TemperatureF")) + " at "+largestSoFar.get("DateUTC"));
         
