@@ -35,7 +35,7 @@ public class maxmTemp {
 
         CSVRecord temp=calMaxTemp(parser);
         double temperature=Double.parseDouble(temp.get("TemperatureF"));
-        System.out.println("Maxm. Temperature: "+temperature);
+        System.out.println("Maxm. Temperature: "+temperature + " at "+temp.get("TimeEST"));
     }
 
     public static void main(String[] args) {
