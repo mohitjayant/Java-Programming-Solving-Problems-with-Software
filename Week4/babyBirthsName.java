@@ -5,27 +5,29 @@ import org.apache.commons.csv.*;
 
 public class babyBirthsName 
 {
-    public void totalBirths(FileResource fr) 
+    public int totalBirths(FileResource fr) 
     {
+        //FileResource fr=new FileResource();
         int totalBir=0;
         int totalBoys=0;
         int totalGirls=0;
         for(CSVRecord rec:fr.getCSVParser(false))
         {
             int numBorn=Integer.parseInt(rec.get(2)); 
-            totalBir+=numBorn;
+            totalBir+=+1;
             if(rec.get(1).equals("M"))
             {
-                totalBoys+=numBorn;
+                totalBoys+=1;
             } 
             else
             {
-                totalGirls+=numBorn;
+                totalGirls+=1;
             }
         }
-        System.out.println("Total Birth: "+totalBir);
-        System.out.println("Total Girls: "+totalGirls);
-        System.out.println("Total Boys: "+totalBoys);
+        return totalBoys;
+        //System.out.println("Total Birth: "+totalBir);
+        //System.out.println("Total Girls: "+totalGirls);
+        //System.out.println("Total Boys: "+totalBoys);
 
     }
 
@@ -89,29 +91,64 @@ public class babyBirthsName
 
     public void rankInManyFiles() 
     {
-        int highestRank=Integer.MAX_VALUE;
+        double avg=0;
+        int count=0;
+        int highestRank=Integer.MIN_VALUE;
         DirectoryResource dr=new DirectoryResource();
         for(File f:dr.selectedFiles())
          {
              FileResource fr=new FileResource(f);
              int currentRank=calRank(fr,"M","Mich");
-             
-             if((currentRank<highestRank) && currentRank!=-1)
+             count++;
+             avg+=currentRank;
+             if((currentRank>highestRank) && currentRank!=-1)
              {
                  highestRank=currentRank;
              }
          }
-
+         avg=avg/count;
+         System.out.println("Avg. rank of All Files: "+avg);
          System.out.println("Highest rank: "+highestRank);
+    }
+
+    public void totalChild(String name,String gender,int year) 
+    {
+        String fName="Week4/us_babynames/us_babynames_by_year/yob"+year+".csv";
+        System.out.println(fName);
+        FileResource fr=new FileResource(fName);
+        //int rank=calRank(fr, gender, name);
+        int total=0;
+        int child=totalBirths(fr);
+        for(CSVRecord rec:fr.getCSVParser(false))
+        {
+            if(rec.get(1).equals(gender))
+            {
+                if(rec.get(0).equals(name))
+                {
+                    //System.out.println(rec.get(0));
+                    break;
+                }
+                else
+                {
+                    
+                    total=total+1;
+                    
+                    //System.out.println(total);
+                }
+            }
+        }
+
+        System.out.println("Num. of  Rank > Drew: "+(child-total));
     }
 
     public void printNames() 
     {
-        //FileResource fr=new FileResource();
-        //totalBirths(fr);
+        
+        //totalBirths();
         //getRank("Owen",1974,"M");
-        //getName(2014,430,"M");
-        rankInManyFiles();
+        //getName(1982,450,"M");
+        //rankInManyFiles();
+        totalChild("Drew","M",1990);
         
     }
 
